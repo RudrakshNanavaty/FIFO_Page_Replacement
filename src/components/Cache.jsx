@@ -1,3 +1,4 @@
+//MUI
 import {
 	Grid,
 	Table,
@@ -9,6 +10,8 @@ import {
 	TableHead,
 	Typography
 } from '@mui/material';
+import { CheckRounded, ClearRounded } from '@mui/icons-material';
+// DevExtreme
 import {
 	Chart,
 	PieSeries,
@@ -116,6 +119,38 @@ const Cache = props => {
 									</TableRow>
 								);
 							})}
+							<TableRow sx={{ borderTop: 1 }}>
+								<TableCell
+									sx={{
+										borderRight: '1px solid #515151'
+									}}
+								/>
+								{outputs.status.map(e => {
+									return (
+										<TableCell
+											align='center'
+											sx={{
+												borderRight:
+													'1px solid #515151',
+												'&:last-child': {
+													borderRight: 0
+												}
+											}}
+											key={
+												e *
+												Math.random() *
+												Math.random()
+											}
+										>
+											{e ? (
+												<CheckRounded color='success' />
+											) : (
+												<ClearRounded color='error' />
+											)}
+										</TableCell>
+									);
+								})}
+							</TableRow>
 						</TableBody>
 					</Table>
 				</TableContainer>
@@ -127,7 +162,7 @@ const Cache = props => {
 					Hits: {outputs.hits}
 				</Typography>
 				<Typography align='center' fontSize='large' fontWeight='bold'>
-					Misses: {outputs.pageFaults}
+					Misses: {outputs.misses}
 				</Typography>
 				<Typography align='center' fontSize='large' fontWeight='bold'>
 					Hit Percent:{' '}

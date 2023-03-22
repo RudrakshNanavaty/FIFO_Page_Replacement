@@ -7,11 +7,12 @@ const assets = {
 		shape: { borderRadius: 12 }
 	},
 	logic: (cacheSize, pages) => {
-		let pageFaults = 0;
+		let misses = 0;
 		let hits = 0;
 		let queue = [];
 		let hitRatio = 0;
 		let table = [];
+		let status = [];
 
 		// initialising the table
 		for (let i = 0; i < cacheSize; i++)
@@ -23,15 +24,20 @@ const assets = {
 
 			// if the page is not present in the current Queue
 			if (index === -1) {
-				pageFaults++;
+				misses++;
 
 				if (queue.length === cacheSize) queue.shift();
 
 				queue.push(page);
+
+				status.push(false);
 			}
 
 			// Page Already present
-			else hits++;
+			else {
+				hits++;
+				status.push(true);
+			}
 
 			for (let j = 0; j < cacheSize; j++)
 				// if current frame index < total cache size
@@ -40,11 +46,14 @@ const assets = {
 
 		hitRatio = hits / pages.length;
 
+		console.log(status);
+
 		return {
 			table,
-			pageFaults,
+			misses,
 			hits,
-			hitPercent: hitRatio.toFixed(2) * 100
+			hitPercent: hitRatio.toFixed(2) * 100,
+			status
 		};
 	}
 };

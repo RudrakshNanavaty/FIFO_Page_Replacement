@@ -1,4 +1,6 @@
+// MUI
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+// local files
 import AppLayout from './AppLayout';
 import assets from './assets';
 
